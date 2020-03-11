@@ -26,16 +26,16 @@
 
             <ImageView
                 android:id="@+id/userProfileImage"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:importantForAccessibility="no"
+                app:imageFromUrl="@{user.profileImageUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:imageFromUrl="@{user.profileImageUrl}"
                 tools:src="@drawable/ic_empty_set" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/reputation"
-                android:textSize="14sp"
+                android:textSize="@dimen/sp_12"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/userProfileImage"
                 app:layout_constraintTop_toBottomOf="@id/userName" />
@@ -69,8 +69,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textSize="14sp"
                 android:textStyle="bold"
+                android:textSize="@dimen/sp_12"
                 app:layout_constraintStart_toEndOf="@id/reputationLabel"
                 app:layout_constraintTop_toBottomOf="@id/userName"
                 tools:text="@{Long.toString(user.reputation)}" />
@@ -79,13 +79,59 @@
                 android:id="@+id/heartImage"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="36dp"
                 android:layout_marginEnd="16dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_heart_red"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/location"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/userProfileImage"
+                app:layout_constraintTop_toBottomOf="@+id/reputationLabel" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"
+                android:text="@{user.location}"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/reputation" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:textStyle="bold"
+                android:text="@string/last_access_date"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toEndOf="@+id/userProfileImage"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:textStyle="bold"
+                app:date="@{user.lastAccessDate}"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

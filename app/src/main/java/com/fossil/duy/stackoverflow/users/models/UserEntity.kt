@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 
 @Entity(tableName = "users")
 data class UserEntity(
@@ -24,7 +25,7 @@ fun List<UserEntity>.asDomainModel(): List<UserDomain> {
             reputation = it.reputation,
             profileImageUrl = it.profileImageUrl,
             location = it.location,
-            lastAccessDate = DateTime(it.lastAccessDate) ,
+            lastAccessDate = DateTime(it.lastAccessDate, DateTimeZone.UTC) ,
             isBookmarked = it.isBookmarked)
     }
 }

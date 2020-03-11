@@ -6,4 +6,6 @@
     <string name="navigation_drawer_header_title" translatable="false">FOSSIL@DUYNGUYEN</string>
     <string name="menu_title_user_list">Stackoverflow Users</string>
     <string name="menu_title_setting">Setting</string>
+    <string name="location">Location:</string>
+    <string name="last_access_date">Last access date:</string>
 </resources>
