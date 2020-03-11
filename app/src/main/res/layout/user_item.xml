@@ -35,6 +35,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:imageFromUrl="@{user.profileImageUrl}"
                 tools:src="@drawable/ic_empty_set" />
 
             <TextView
@@ -50,7 +51,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/userProfileImage"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Ashley Figueira" />
+                tools:text="@{user.name}" />
 
             <TextView
                 android:id="@+id/reputationLabel"
@@ -72,7 +73,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/reputationLabel"
                 app:layout_constraintTop_toBottomOf="@id/userName"
-                tools:text="123456" />
+                tools:text="@{Long.toString(user.reputation)}" />
 
             <ImageView
                 android:id="@+id/heartImage"
@@ -82,6 +83,7 @@
                 android:layout_marginEnd="16dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_heart_red"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

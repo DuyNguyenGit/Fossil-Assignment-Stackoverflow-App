@@ -1,6 +1,7 @@
 package com.fossil.duy.stackoverflow.users.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.fossil.duy.stackoverflow.databinding.UserListFragmentBinding
 import com.fossil.duy.stackoverflow.di.injectViewModel
 import com.fossil.duy.stackoverflow.users.viewmodels.UserListViewModel
 import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 import javax.inject.Inject
 
 class UserListFragment : BaseFragment() {
@@ -52,7 +54,9 @@ class UserListFragment : BaseFragment() {
             when (result.status) {
                 DataResult.Status.SUCCESS -> {
                     binding.progressBar.hide()
-                    result.data?.let { adapter.submitList(it) }
+                    result.data?.let {
+                        Timber.i(it.size.toString())
+                        adapter.submitList(it) }
                 }
                 DataResult.Status.LOADING -> binding.progressBar.show()
                 DataResult.Status.ERROR -> {

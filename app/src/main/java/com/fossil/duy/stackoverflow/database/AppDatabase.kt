@@ -17,6 +17,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun usersDao(): UsersDao
 
     companion object {
-        const val STACK_DB = "stack_db"
+        const val STACK_DB = "STACKOVERFLOW"
     }
 }

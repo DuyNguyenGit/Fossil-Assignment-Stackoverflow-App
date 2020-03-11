@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/userListFragment"
         android:name="com.fossil.duy.stackoverflow.users.views.UserListFragment"
-        android:label="UserListFragment"
+        android:label="@string/menu_title_user_list"
         tools:layout="@layout/user_list_fragment" />
 </navigation>
