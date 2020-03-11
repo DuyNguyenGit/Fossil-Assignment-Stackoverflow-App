@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Stackoverflow</string>
+
+    <string name="reputation">Reputation:</string>
+    <string name="navigation_drawer_header_content_description">Navigation drawer header logo</string>
+    <string name="navigation_drawer_header_title" translatable="false">FOSSIL@DUYNGUYEN</string>
+    <string name="menu_title_user_list">Stackoverflow Users</string>
+    <string name="menu_title_setting">Setting</string>
 </resources>
