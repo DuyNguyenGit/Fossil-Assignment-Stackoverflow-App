@@ -3,6 +3,7 @@ package com.fossil.duy.stackoverflow.users.views
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,11 +17,15 @@ class UserListAdapter : ListAdapter<UserDomain, UserListAdapter.UserViewHolder>(
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user: UserDomain = getItem(position)
-        holder.bind(createClickListener(), user)
+        holder.bind(createClickListener(user.id, user.name), user)
     }
 
-    private fun createClickListener(): View.OnClickListener {
-        return View.OnClickListener {  }
+    private fun createClickListener(id: Long, name: String): View.OnClickListener {
+        return View.OnClickListener {
+            val direction =
+                UserListFragmentDirections.actionUserListFragmentToUserDetailFragment(id, name)
+            it.findNavController().navigate(direction)
+        }
     }
 
     class UserViewHolder(private val binding: UserItemBinding) :

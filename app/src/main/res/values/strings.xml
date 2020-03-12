@@ -8,4 +8,9 @@
     <string name="menu_title_setting">Setting</string>
     <string name="location">Location:</string>
     <string name="last_access_date">Last access date:</string>
+    <string name="menu_title_user_detail_list">User Details</string>
+    <string name="repo_history_type">"Repository history type: "</string>
+    <string name="reputation_change">"Repository change: "</string>
+    <string name="creation_date">"Creation date: "</string>
+    <string name="post_id">"Post Id: "</string>
 </resources>

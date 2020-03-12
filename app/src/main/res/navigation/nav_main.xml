@@ -9,5 +9,27 @@
         android:id="@+id/userListFragment"
         android:name="com.fossil.duy.stackoverflow.users.views.UserListFragment"
         android:label="@string/menu_title_user_list"
-        tools:layout="@layout/user_list_fragment" />
+        tools:layout="@layout/user_list_fragment" >
+        <action
+            android:id="@+id/action_userListFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.fossil.duy.stackoverflow.userdetail.views.UserDetailFragment"
+        android:label="@string/menu_title_user_detail_list">
+
+        <argument
+            android:name="userId"
+            app:argType="long" />
+
+        <argument
+            android:name="userName"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>
