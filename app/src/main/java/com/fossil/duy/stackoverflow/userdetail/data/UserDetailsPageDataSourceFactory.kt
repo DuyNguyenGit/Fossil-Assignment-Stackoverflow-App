@@ -4,13 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PagedList
 import com.fossil.duy.stackoverflow.userdetail.models.UserDetailEntity
+import com.fossil.duy.stackoverflow.users.data.UsersDao
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
 class UserDetailsPageDataSourceFactory @Inject constructor(
     private val userId: Long? = null,
     private val dataSource: UserDetailsRemoteDataSource,
-    private val dao: UserDetailDao,
+    private val dao: UsersDao,
     private val scope: CoroutineScope
 ) : DataSource.Factory<Int, UserDetailEntity>() {
 

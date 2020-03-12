@@ -25,6 +25,6 @@ class UsersRepository @Inject constructor(private val dao: UsersDao,
     val users = resultLiveData(
             databaseQuery = { cache },
             networkCall = { remoteSource.fetchData(page) },
-            saveCallResult = { dao.insertAll(usersEntityMapper.mapFrom(it)) })
+            saveCallResult = { dao.insertAllUser(usersEntityMapper.mapFrom(it)) })
 
 }

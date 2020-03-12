@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
+import com.fossil.duy.stackoverflow.R
 import com.fossil.duy.stackoverflow.base.BaseFragment
+import com.fossil.duy.stackoverflow.common.changeTextByCondition
+import com.fossil.duy.stackoverflow.common.getFormattedDate
 import com.fossil.duy.stackoverflow.common.hide
-import com.fossil.duy.stackoverflow.common.setTitle
+import com.fossil.duy.stackoverflow.common.loadCircleImage
 import com.fossil.duy.stackoverflow.databinding.UserDetailFragmentBinding
 import com.fossil.duy.stackoverflow.di.injectViewModel
 import com.fossil.duy.stackoverflow.userdetail.viewmodels.UserDetailViewModel
@@ -27,8 +30,7 @@ class UserDetailFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: UserDetailViewModel
     private val adapter: UserDetailsAdapter by lazy { UserDetailsAdapter() }
-    private val args: UserDetailFragmentArgs by navArgs()
-
+    private val userId by lazy { navArgs<UserDetailFragmentArgs>().value.userId }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,29 +38,33 @@ class UserDetailFragment : BaseFragment() {
     ): View? {
         viewModel = injectViewModel(viewModelFactory)
         viewModel.connectivityAvailable = ConnectivityUtil.isConnected(context!!)
-        viewModel.userId = args.userId
-
+        viewModel.userId = userId
         val binding = UserDetailFragmentBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.userDetailViewModel = viewModel
         context ?: return binding.root
         binding.recyclerView.adapter = adapter
 
-        args.userName?.let { setTitle(it) }
-        observeCurrentUser(binding)
         updateUIByObserve(binding, adapter)
 
         setHasOptionsMenu(true)
         return binding.root
     }
 
-    private fun observeCurrentUser(binding: UserDetailFragmentBinding?) {
-
-    }
-
     private fun updateUIByObserve(
         binding: UserDetailFragmentBinding,
         adapter: UserDetailsAdapter
     ) {
+        viewModel.user.observe(viewLifecycleOwner) {
+            binding.userName.text = it.name
+            binding.reputation.text = it.reputation.toString()
+            binding.location.text = it.location
+            binding.lastAccess.text = it.lastAccessDate.getFormattedDate()
+            binding.bookMarkBtn.changeTextByCondition(
+                it.isBookmarked,
+                resources.getString(R.string.deBookmark), resources.getString(R.string.bookmark)
+            )
+            binding.userProfileImage.loadCircleImage(it.profileImageUrl)
+        }
         viewModel.userDetails.observe(viewLifecycleOwner) {
             binding.progressBar.hide()
             adapter.submitList(it)

@@ -5,12 +5,12 @@
 
     <data>
         <variable
-            name="user"
-            type="com.fossil.duy.stackoverflow.users.models.UserDomain" />
+            name="userDetailViewModel"
+            type="com.fossil.duy.stackoverflow.userdetail.viewmodels.UserDetailViewModel" />
     </data>
 
     <FrameLayout
-        android:background="@drawable/bg_gradient"
+        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -25,7 +25,7 @@
                 android:layout_margin="6dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:cardBackgroundColor="@android:color/white">
+                app:cardBackgroundColor="@color/colorPrimaryDark">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -33,14 +33,12 @@
 
                     <ImageView
                         android:id="@+id/userProfileImage"
-                        android:layout_width="70dp"
-                        android:layout_height="80dp"
+                        android:layout_width="90dp"
+                        android:layout_height="100dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:importantForAccessibility="no"
-                        app:imageFromUrl="@{user.profileImageUrl}"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:src="@drawable/ic_empty_set" />
@@ -52,13 +50,12 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/userProfileImage"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="@{user.name}" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/reputationLabel"
@@ -66,6 +63,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/reputation"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/sp_12"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@id/userProfileImage"
@@ -78,20 +76,9 @@
                         android:layout_marginStart="8dp"
                         android:textStyle="bold"
                         android:textSize="@dimen/sp_12"
+                        android:textColor="@android:color/white"
                         app:layout_constraintStart_toEndOf="@id/reputationLabel"
-                        app:layout_constraintTop_toBottomOf="@id/userName"
-                        tools:text="@{Long.toString(user.reputation)}" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/followButton"
-                        style="@style/Widget.MaterialComponents.Button"
-                        android:text="@string/bookmark"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp_10"
-                        android:layout_marginEnd="@dimen/dp_10"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@id/userName" />
 
                     <TextView
                         android:id="@+id/textView"
@@ -100,17 +87,18 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/location"
                         android:textSize="@dimen/sp_12"
+                        android:textColor="@android:color/white"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/userProfileImage"
                         app:layout_constraintTop_toBottomOf="@+id/reputationLabel" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/location"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:textStyle="bold"
-                        android:text="@{user.location}"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/sp_12"
                         app:layout_constraintStart_toEndOf="@+id/textView"
                         app:layout_constraintTop_toBottomOf="@+id/reputation" />
@@ -123,21 +111,34 @@
                         android:layout_marginBottom="8dp"
                         android:textStyle="bold"
                         android:text="@string/last_access_date"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/sp_12"
                         app:layout_constraintStart_toEndOf="@+id/userProfileImage"
                         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/lastAccess"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginBottom="8dp"
                         android:textStyle="bold"
-                        app:date="@{user.lastAccessDate}"
                         android:textSize="@dimen/sp_12"
+                        android:textColor="@android:color/white"
                         app:layout_constraintStart_toEndOf="@+id/textView3"
-                        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                        app:layout_constraintTop_toBottomOf="@+id/location" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/bookMarkBtn"
+                        style="@style/Widget.MaterialComponents.Button.BookMark"
+                        android:background="@color/colorPrimaryDark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginBottom="@dimen/dp_5"
+                        app:layout_constraintStart_toEndOf="@+id/userProfileImage"
+                        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

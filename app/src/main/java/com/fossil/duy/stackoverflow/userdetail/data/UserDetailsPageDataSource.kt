@@ -3,6 +3,7 @@ package com.fossil.duy.stackoverflow.userdetail.data
 import androidx.paging.PageKeyedDataSource
 import com.fossil.duy.stackoverflow.database.DataResult
 import com.fossil.duy.stackoverflow.userdetail.models.UserDetailEntity
+import com.fossil.duy.stackoverflow.users.data.UsersDao
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -15,7 +16,7 @@ import javax.inject.Inject
 class UserDetailsPageDataSource @Inject constructor(
     private val userId: Long? = null,
     private val dataSource: UserDetailsRemoteDataSource,
-    private val dao: UserDetailDao,
+    private val dao: UsersDao,
     private val scope: CoroutineScope
 ) : PageKeyedDataSource<Int, UserDetailEntity>() {
 
@@ -50,7 +51,7 @@ class UserDetailsPageDataSource @Inject constructor(
             val response = dataSource.fetchUserDetails(userId.toString(), page, pageSize)
             if (response.status == DataResult.Status.SUCCESS) {
                 val results = response.data!!.userDetails
-                dao.insertAll(results)
+                dao.insertAllUserDetails(results)
                 callback(results)
             } else if (response.status == DataResult.Status.ERROR) {
                 postError(response.message!!)

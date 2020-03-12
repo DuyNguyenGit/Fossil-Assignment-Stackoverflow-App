@@ -5,8 +5,9 @@ import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.fossil.duy.stackoverflow.userdetail.models.UserDetailEntity
+import com.fossil.duy.stackoverflow.users.data.UsersDao
 import com.fossil.duy.stackoverflow.users.models.UserDomain
-import com.fossil.duy.stackoverflow.users.models.asDomainModel
+import com.fossil.duy.stackoverflow.users.models.mapToUserDomain
 import kotlinx.coroutines.CoroutineScope
 import timber.log.Timber
 import javax.inject.Inject
@@ -17,13 +18,13 @@ import javax.inject.Singleton
  */
 @Singleton
 class UserDetailsRepository @Inject constructor(
-    private val dao: UserDetailDao,
+    private val dao: UsersDao,
     private val userDetailsRemoteDataSource: UserDetailsRemoteDataSource
 ) {
 
-//    val cache: LiveData<UserDomain> = Transformations.map(dao.getUsers()) {
-//        it.asDomainModel()
-//    }
+    fun getCachedUser(userId: Long): LiveData<UserDomain> = Transformations.map(dao.getUser(userId)) {
+        it.mapToUserDomain()
+    }
 
     fun observePagedUserDetails(
         connectivityAvailable: Boolean, userId: Long? = null,

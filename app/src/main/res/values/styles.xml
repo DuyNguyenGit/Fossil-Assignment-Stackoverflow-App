@@ -16,4 +16,11 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/>
+
+    <style name="Widget.MaterialComponents.Button.BookMark" parent="Widget.MaterialComponents.Button">
+        <item name="android:tint">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:paddingStart">@dimen/dp_12</item>
+        <item name="android:paddingEnd">@dimen/dp_12</item>
+    </style>
 </resources>

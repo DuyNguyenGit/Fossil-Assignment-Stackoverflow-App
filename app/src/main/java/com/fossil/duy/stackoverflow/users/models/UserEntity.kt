@@ -19,13 +19,18 @@ data class UserEntity(
 
 fun List<UserEntity>.asDomainModel(): List<UserDomain> {
     return map {
-        UserDomain(
-            id = it.id,
-            name = it.name,
-            reputation = it.reputation,
-            profileImageUrl = it.profileImageUrl,
-            location = it.location,
-            lastAccessDate = DateTime(it.lastAccessDate, DateTimeZone.UTC) ,
-            isBookmarked = it.isBookmarked)
+        it.mapToUserDomain()
     }
+}
+
+fun UserEntity.mapToUserDomain(): UserDomain {
+    return UserDomain(
+        id = this.id,
+        name = this.name,
+        reputation = this.reputation,
+        profileImageUrl = this.profileImageUrl,
+        location = this.location,
+        lastAccessDate = DateTime(this.lastAccessDate, DateTimeZone.UTC),
+        isBookmarked = this.isBookmarked
+    )
 }

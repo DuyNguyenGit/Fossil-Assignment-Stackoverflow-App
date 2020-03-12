@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#FFFFC107</color>
+    <color name="colorPrimaryDark">#DA670B</color>
+    <color name="colorAccent">#F6337A</color>
 
-    <color name="gradient_start">#008577</color>
-    <color name="gradient_end">#16E8D2</color>
+    <color name="gradient_start">#E8D31E</color>
+    <color name="gradient_end">#FFEB3B</color>
+
+    <color name="user_item">#FFEB3B</color>
 </resources>

@@ -1,10 +1,12 @@
 package com.fossil.duy.stackoverflow.users.data
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.fossil.duy.stackoverflow.userdetail.models.UserDetailEntity
 import com.fossil.duy.stackoverflow.users.models.UserEntity
 
 /**
@@ -13,9 +15,29 @@ import com.fossil.duy.stackoverflow.users.models.UserEntity
 @Dao
 interface UsersDao {
 
+    // This is queries for User List
     @Query("SELECT * FROM users ORDER BY reputation DESC")
     fun getUsers(): LiveData<List<UserEntity>>
 
+    @Query("SELECT * from users WHERE id = :id")
+    fun getUser(id: Long): LiveData<UserEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(plants: List<UserEntity>)
+    suspend fun insertAllUser(plants: List<UserEntity>)
+    //**********************
+
+
+    // This is queries for user details
+    @Query("SELECT * FROM user_details WHERE user_id = :userId ORDER BY creation_date DESC")
+    fun getUserDetails(userId: Long): LiveData<List<UserDetailEntity>>
+
+    @Query("SELECT * FROM user_details WHERE user_id = :userId ORDER BY creation_date DESC")
+    fun getPagedUserDetailsByUserId(userId: Long): DataSource.Factory<Int, UserDetailEntity>
+
+    @Query("SELECT * FROM user_details ORDER BY creation_date DESC")
+    fun getPagedUserDetails(): DataSource.Factory<Int, UserDetailEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllUserDetails(userDetails: List<UserDetailEntity>)
+    //**********************
 }

@@ -7,7 +7,6 @@ import com.ashleyfigueira.domain.di.PerApplication
 import com.fossil.duy.stackoverflow.api.UserService
 import com.fossil.duy.stackoverflow.database.AppDatabase
 import com.fossil.duy.stackoverflow.di.annotations.CoroutineScropeIO
-import com.fossil.duy.stackoverflow.userdetail.data.UserDetailDao
 import com.fossil.duy.stackoverflow.userdetail.data.UserDetailsRemoteDataSource
 import com.fossil.duy.stackoverflow.userdetail.data.UserDetailsRepository
 import com.fossil.duy.stackoverflow.users.data.UsersDao
@@ -40,11 +39,6 @@ class DataModule {
 
     @PerApplication
     @Provides
-    fun provideUserDetailsDao(stackDatabase: AppDatabase): UserDetailDao =
-        stackDatabase.userDetailsDao()
-
-    @PerApplication
-    @Provides
     fun provideRoomDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(
             context, AppDatabase::class.java,
@@ -65,8 +59,8 @@ class DataModule {
     @PerApplication
     @Provides
     fun provideUserDetailsRepository(
-        userDetailDao: UserDetailDao, dataSource: UserDetailsRemoteDataSource
-    ): UserDetailsRepository = UserDetailsRepository(userDetailDao, dataSource)
+        userDao: UsersDao, dataSource: UserDetailsRemoteDataSource
+    ): UserDetailsRepository = UserDetailsRepository(userDao, dataSource)
 
     @CoroutineScropeIO
     @Provides
