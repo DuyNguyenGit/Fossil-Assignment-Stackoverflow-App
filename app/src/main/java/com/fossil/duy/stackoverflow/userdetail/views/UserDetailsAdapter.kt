@@ -1,16 +1,16 @@
 package com.fossil.duy.stackoverflow.userdetail.views
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fossil.duy.stackoverflow.databinding.UserDetailItemBinding
 import com.fossil.duy.stackoverflow.userdetail.models.UserDetailEntity
+import timber.log.Timber
 
 class UserDetailsAdapter :
-    ListAdapter<UserDetailEntity, UserDetailsAdapter.UserDetailViewHolder>(DiffCallback()) {
+    PagedListAdapter<UserDetailEntity, UserDetailsAdapter.UserDetailViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserDetailViewHolder =
         UserDetailViewHolder(
@@ -22,12 +22,8 @@ class UserDetailsAdapter :
         )
 
     override fun onBindViewHolder(holder: UserDetailViewHolder, position: Int) {
-        val userDetail: UserDetailEntity = getItem(position)
-        holder.bind(userDetail)
-    }
-
-    private fun createClickListener(): View.OnClickListener {
-        return View.OnClickListener { }
+        val userDetail: UserDetailEntity? = getItem(position)
+        userDetail?.let { holder.bind(it) }
     }
 
     class UserDetailViewHolder(private val binding: UserDetailItemBinding) :

@@ -1,4 +1,4 @@
-package com.fossil.duy.stackoverflow.database
+package com.fossil.duy.stackoverflow.di
 
 import android.content.Context
 import com.ashleyfigueira.domain.di.ApplicationContext

@@ -2,7 +2,6 @@ package com.fossil.duy.stackoverflow.di
 
 import com.ashleyfigueira.domain.di.PerApplication
 import com.fossil.duy.stackoverflow.App
-import com.fossil.duy.stackoverflow.database.AppModule
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule

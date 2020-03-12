@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 
 
 @BindingAdapter("imageFromUrl")
@@ -23,4 +24,9 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
 @BindingAdapter("date")
 fun bindDateTime(view: TextView, dateTime: DateTime?) {
     view.text = dateTime?.getFormattedDate() ?: ""
+}
+
+@BindingAdapter("creationDate")
+fun bindCreationDate(view: TextView, millis: Long?) {
+    view.text = DateTime(millis, DateTimeZone.UTC).getFormattedDate()
 }

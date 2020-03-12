@@ -34,6 +34,7 @@ buildscript {
         daggerVersion = '2.23.2'
         jodaVersion = '2.10.5'
         recyclerViewVersion = '1.1.0'
+        pagingVersion = '2.1.0'
     }
     repositories {
         google()

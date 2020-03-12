@@ -4,20 +4,23 @@ import android.content.Context
 import androidx.room.Room
 import com.ashleyfigueira.domain.di.ApplicationContext
 import com.ashleyfigueira.domain.di.PerApplication
-import com.fossil.duy.stackoverflow.App
 import com.fossil.duy.stackoverflow.api.UserService
 import com.fossil.duy.stackoverflow.database.AppDatabase
+import com.fossil.duy.stackoverflow.di.annotations.CoroutineScropeIO
+import com.fossil.duy.stackoverflow.userdetail.data.UserDetailDao
+import com.fossil.duy.stackoverflow.userdetail.data.UserDetailsRemoteDataSource
+import com.fossil.duy.stackoverflow.userdetail.data.UserDetailsRepository
 import com.fossil.duy.stackoverflow.users.data.UsersDao
 import com.fossil.duy.stackoverflow.users.data.UsersRemoteDataSource
 import com.fossil.duy.stackoverflow.users.data.UsersRepository
 import com.fossil.duy.stackoverflow.users.models.UsersEntityMapper
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module(includes = [CoreDataModule::class])
 class DataModule {
@@ -28,14 +31,25 @@ class DataModule {
 
     @PerApplication
     @Provides
+    fun provideUserDetailsRemoteDataSource(userService: UserService) =
+        UserDetailsRemoteDataSource(userService)
+
+    @PerApplication
+    @Provides
     fun provideUsersDao(stackDatabase: AppDatabase): UsersDao = stackDatabase.usersDao()
 
     @PerApplication
     @Provides
-    fun provideRoomDatabase(@ApplicationContext context: Context): AppDatabase = Room.databaseBuilder(
-        context, AppDatabase::class.java,
-        AppDatabase.STACK_DB
-    ).build()
+    fun provideUserDetailsDao(stackDatabase: AppDatabase): UserDetailDao =
+        stackDatabase.userDetailsDao()
+
+    @PerApplication
+    @Provides
+    fun provideRoomDatabase(@ApplicationContext context: Context): AppDatabase =
+        Room.databaseBuilder(
+            context, AppDatabase::class.java,
+            AppDatabase.STACK_DB
+        ).build()
 
     @PerApplication
     @Provides
@@ -50,6 +64,16 @@ class DataModule {
 
     @PerApplication
     @Provides
+    fun provideUserDetailsRepository(
+        userDetailDao: UserDetailDao, dataSource: UserDetailsRemoteDataSource
+    ): UserDetailsRepository = UserDetailsRepository(userDetailDao, dataSource)
+
+    @CoroutineScropeIO
+    @Provides
+    fun provideCoroutineScopeIO() = CoroutineScope(Dispatchers.IO)
+
+    @PerApplication
+    @Provides
     fun provideRetrofitClient(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
@@ -58,5 +82,6 @@ class DataModule {
 
     @PerApplication
     @Provides
-    fun provideUsersService(retrofit: Retrofit): UserService = retrofit.create(UserService::class.java)
+    fun provideUsersService(retrofit: Retrofit): UserService =
+        retrofit.create(UserService::class.java)
 }

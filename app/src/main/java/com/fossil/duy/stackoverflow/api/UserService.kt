@@ -1,8 +1,10 @@
 package com.fossil.duy.stackoverflow.api
 
+import com.fossil.duy.stackoverflow.userdetail.models.UserDetailResponse
 import com.fossil.duy.stackoverflow.users.models.UsersResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -22,5 +24,14 @@ interface UserService {
         @Query("pagesize") pageSize: Int? = null,
         @Query("site") site: String? = site_parameter
     ): Response<UsersResponse>
+
+
+    @GET("users/{userId}/reputation-history/")
+    suspend fun getUserDetails(
+        @Path("userId") userId: String,
+        @Query("page") page: Int? = null,
+        @Query("pagesize") pageSize: Int? = null,
+        @Query("site") site: String? = site_parameter
+    ): Response<UserDetailResponse>
 
 }
