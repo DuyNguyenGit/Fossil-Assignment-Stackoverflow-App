@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.fossil.duy.stackoverflow.base.BaseActivity
 import com.fossil.duy.stackoverflow.databinding.ActivityMainBinding
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : BaseActivity() {
 

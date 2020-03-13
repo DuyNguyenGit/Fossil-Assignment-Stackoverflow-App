@@ -32,4 +32,9 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.fossil.duy.stackoverflow.SettingFragment"
+        android:label="setting_fragment"
+        tools:layout="@layout/setting_fragment" />
 </navigation>
