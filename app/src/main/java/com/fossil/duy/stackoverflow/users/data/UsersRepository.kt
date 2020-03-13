@@ -13,18 +13,23 @@ import javax.inject.Singleton
  * Repository module for handling data operations.
  */
 @Singleton
-class UsersRepository @Inject constructor(private val dao: UsersDao,
-                                          private val remoteSource: UsersRemoteDataSource,
-                                          private val usersEntityMapper: UsersEntityMapper) {
+class UsersRepository @Inject constructor(
+    private val dao: UsersDao,
+    private val remoteSource: UsersRemoteDataSource,
+    private val usersEntityMapper: UsersEntityMapper
+) {
 
     var page: Page = Page()
-        set(value) {field = value}
+        set(value) {
+            field = value
+        }
+
     val cache: LiveData<List<UserDomain>> = Transformations.map(dao.getUsers()) {
         it.asDomainModel()
     }
     val users = resultLiveData(
-            databaseQuery = { cache },
-            networkCall = { remoteSource.fetchData(page) },
-            saveCallResult = { dao.insertAllUser(usersEntityMapper.mapFrom(it)) })
+        databaseQuery = { cache },
+        networkCall = { remoteSource.fetchData(page) },
+        saveCallResult = { dao.insertAllUser(usersEntityMapper.mapFrom(it)) })
 
 }

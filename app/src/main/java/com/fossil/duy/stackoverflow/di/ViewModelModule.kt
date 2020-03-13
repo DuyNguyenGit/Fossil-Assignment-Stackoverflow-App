@@ -2,6 +2,7 @@ package com.fossil.duy.stackoverflow.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.fossil.duy.stackoverflow.setting.SettingViewModel
 import com.fossil.duy.stackoverflow.userdetail.viewmodels.UserDetailViewModel
 import com.fossil.duy.stackoverflow.users.viewmodels.UserListViewModel
 
@@ -24,5 +25,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(UserDetailViewModel::class)
     abstract fun bindUserDetailViewModel(viewModel: UserDetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingViewModel::class)
+    abstract fun bindUserSettingViewModel(viewModel: SettingViewModel): ViewModel
 
 }

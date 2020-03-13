@@ -1,10 +1,12 @@
 package com.fossil.duy.stackoverflow.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.ashleyfigueira.domain.di.ApplicationContext
 import com.ashleyfigueira.domain.di.PerApplication
 import com.fossil.duy.stackoverflow.api.UserService
+import com.fossil.duy.stackoverflow.common.SharedPreference
 import com.fossil.duy.stackoverflow.database.AppDatabase
 import com.fossil.duy.stackoverflow.di.annotations.CoroutineScropeIO
 import com.fossil.duy.stackoverflow.userdetail.data.UserDetailsRemoteDataSource
@@ -44,6 +46,11 @@ class DataModule {
             context, AppDatabase::class.java,
             AppDatabase.STACK_DB
         ).build()
+
+    @PerApplication
+    @Provides
+    fun provideSharePreference(@ApplicationContext context: Context): SharedPreference =
+        SharedPreference(context)
 
     @PerApplication
     @Provides

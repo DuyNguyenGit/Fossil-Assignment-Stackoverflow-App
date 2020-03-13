@@ -1,15 +1,15 @@
 package com.fossil.duy.stackoverflow.users.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.fossil.duy.stackoverflow.R
 import com.fossil.duy.stackoverflow.base.BaseFragment
+import com.fossil.duy.stackoverflow.common.SharedPreference
+import com.fossil.duy.stackoverflow.common.SharedPreference.Companion.DISPLAY_ONLY_BOORMARK_USER
 import com.fossil.duy.stackoverflow.common.hide
 import com.fossil.duy.stackoverflow.common.show
 import com.fossil.duy.stackoverflow.database.DataResult
@@ -26,6 +26,8 @@ class UserListFragment : BaseFragment() {
         fun newInstance() = UserListFragment()
     }
 
+    @Inject
+    lateinit var sharedPreference: SharedPreference
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: UserListViewModel
@@ -56,7 +58,11 @@ class UserListFragment : BaseFragment() {
                     binding.progressBar.hide()
                     result.data?.let {
                         Timber.i(it.size.toString())
-                        adapter.submitList(it) }
+                        val isChecked: Boolean =
+                            sharedPreference.getValueBoolien(DISPLAY_ONLY_BOORMARK_USER, false)
+                        Timber.d("DUY: isChecked = $isChecked")
+                        adapter.submitList(if (isChecked) it.filter { it.isBookmarked == true } else it)
+                    }
                 }
                 DataResult.Status.LOADING -> binding.progressBar.show()
                 DataResult.Status.ERROR -> {

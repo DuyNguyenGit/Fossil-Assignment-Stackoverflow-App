@@ -15,4 +15,5 @@
     <string name="post_id">"Post Id: "</string>
     <string name="bookmark">Bookmark</string>
     <string name="deBookmark">De-Bookmark</string>
+    <string name="display_switch">Enable display only bookmarked users</string>
 </resources>

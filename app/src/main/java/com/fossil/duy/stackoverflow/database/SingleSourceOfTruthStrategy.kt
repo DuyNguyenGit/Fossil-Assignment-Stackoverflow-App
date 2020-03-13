@@ -16,16 +16,17 @@ import kotlinx.coroutines.Dispatchers
 fun <T, A> resultLiveData(
     databaseQuery: () -> LiveData<T>,
     networkCall: suspend () -> DataResult<A>,
-    saveCallResult: suspend (A) -> Unit): LiveData<DataResult<T>> = liveData(Dispatchers.IO) {
-                emit(DataResult.loading<T>())
-                val source = databaseQuery.invoke().map { DataResult.success(it) }
-                emitSource(source)
+    saveCallResult: suspend (A) -> Unit
+): LiveData<DataResult<T>> = liveData(Dispatchers.IO) {
+    emit(DataResult.loading<T>())
+    val source = databaseQuery.invoke().map { DataResult.success(it) }
+    emitSource(source)
 
-                val responseStatus = networkCall.invoke()
-                if (responseStatus.status == DataResult.Status.SUCCESS) {
-                    saveCallResult(responseStatus.data!!)
-                } else if (responseStatus.status == DataResult.Status.ERROR) {
-                    emit(DataResult.error<T>(responseStatus.message!!))
-                    emitSource(source)
-                }
+    val responseStatus = networkCall.invoke()
+    if (responseStatus.status == DataResult.Status.SUCCESS) {
+        saveCallResult(responseStatus.data!!)
+    } else if (responseStatus.status == DataResult.Status.ERROR) {
+        emit(DataResult.error<T>(responseStatus.message!!))
+        emitSource(source)
     }
+}
