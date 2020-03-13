@@ -1,21 +1,37 @@
 package com.fossil.duy.stackoverflow.users.models
 
 import com.fossil.duy.stackoverflow.common.Mapper
+import com.fossil.duy.stackoverflow.users.data.UsersDao
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class UsersEntityMapper @Inject constructor() : Mapper<UsersResponse, List<UserEntity>>() {
+class UsersEntityMapper @Inject constructor(val dao: UsersDao) : Mapper<UsersResponse, List<UserEntity>>() {
     override fun mapFrom(from: UsersResponse): List<UserEntity> {
+
         return from.items?.map {
-            UserEntity(
-                it?.user_id?.toLong() ?: throw IllegalArgumentException("User does not have an id"),
-                it.display_name ?: "",
-                it.reputation?.toLong() ?: 0,
-                it.profile_image ?: "",
-                it.location ?: "",
-                it.last_access_date.toLong() ?: 0,
-                false
-            )
+            val existUser = dao.getUserNoLiveDataNoSuspend(it.user_id.toLong())
+            if (existUser == null) {
+                UserEntity(
+                    it?.user_id?.toLong() ?: throw IllegalArgumentException("User does not have an id"),
+                    it.display_name ?: "",
+                    it.reputation?.toLong() ?: 0,
+                    it.profile_image ?: "",
+                    it.location ?: "",
+                    it.last_access_date.toLong() ?: 0,
+                    false
+                )
+            } else {
+                UserEntity(
+                    it?.user_id?.toLong() ?: throw IllegalArgumentException("User does not have an id"),
+                    it.display_name ?: "",
+                    it.reputation?.toLong() ?: 0,
+                    it.profile_image ?: "",
+                    it.location ?: "",
+                    it.last_access_date.toLong() ?: 0,
+                    existUser.isBookmarked
+                )
+            }
+
         } ?: emptyList()
     }
 

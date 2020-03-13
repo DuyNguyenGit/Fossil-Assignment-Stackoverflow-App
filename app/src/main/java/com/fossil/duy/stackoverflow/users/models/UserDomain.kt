@@ -9,5 +9,5 @@ data class UserDomain(
     val profileImageUrl: String,
     val location: String,
     val lastAccessDate: DateTime,
-    val isBookmarked: Boolean
+    var isBookmarked: Boolean
 )

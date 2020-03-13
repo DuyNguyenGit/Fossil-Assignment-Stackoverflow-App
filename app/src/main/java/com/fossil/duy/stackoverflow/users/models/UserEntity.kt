@@ -14,7 +14,7 @@ data class UserEntity(
     @ColumnInfo(name = "profileImageUrl") val profileImageUrl: String,
     @ColumnInfo(name = "location") val location: String,
     @ColumnInfo(name = "lastAccessDate") val lastAccessDate: Long,
-    @ColumnInfo(name = "isBookmarked") val isBookmarked: Boolean
+    @ColumnInfo(name = "isBookmarked") var isBookmarked: Boolean
 )
 
 fun List<UserEntity>.asDomainModel(): List<UserDomain> {

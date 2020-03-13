@@ -41,20 +41,27 @@ class UserDetailFragment : BaseFragment() {
         viewModel.userId = userId
         val binding = UserDetailFragmentBinding.inflate(inflater, container, false)
         binding.userDetailViewModel = viewModel
+
         context ?: return binding.root
         binding.recyclerView.adapter = adapter
 
+        viewModel.loadUser()
+        handleClickListener(binding)
         updateUIByObserve(binding, adapter)
 
         setHasOptionsMenu(true)
         return binding.root
     }
 
+    private fun handleClickListener(binding: UserDetailFragmentBinding) {
+        binding.bookMarkBtn.setOnClickListener { viewModel.bookmark() }
+    }
+
     private fun updateUIByObserve(
         binding: UserDetailFragmentBinding,
         adapter: UserDetailsAdapter
     ) {
-        viewModel.user.observe(viewLifecycleOwner) {
+        viewModel.getUser().observe(viewLifecycleOwner) {
             binding.userName.text = it.name
             binding.reputation.text = it.reputation.toString()
             binding.location.text = it.location

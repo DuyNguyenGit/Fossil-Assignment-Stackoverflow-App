@@ -1,5 +1,6 @@
 package com.fossil.duy.stackoverflow.common
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -22,4 +23,9 @@ fun bindDateTime(view: TextView, dateTime: DateTime?) {
 @BindingAdapter("creationDate")
 fun bindCreationDate(view: TextView, millis: Long?) {
     view.text = DateTime(millis, DateTimeZone.UTC).getFormattedDate()
+}
+
+@BindingAdapter("visible")
+fun bindVisible(view: View, boolean: Boolean) {
+    view.visibility = if (boolean) View.VISIBLE else View.GONE
 }

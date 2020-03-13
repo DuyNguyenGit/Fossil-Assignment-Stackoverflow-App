@@ -47,7 +47,7 @@ class DataModule {
 
     @PerApplication
     @Provides
-    fun provideUsersEntityMapper(): UsersEntityMapper = UsersEntityMapper()
+    fun provideUsersEntityMapper(userDao: UsersDao): UsersEntityMapper = UsersEntityMapper(userDao)
 
     @PerApplication
     @Provides

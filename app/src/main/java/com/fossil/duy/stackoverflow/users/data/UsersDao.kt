@@ -2,10 +2,7 @@ package com.fossil.duy.stackoverflow.users.data
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.fossil.duy.stackoverflow.userdetail.models.UserDetailEntity
 import com.fossil.duy.stackoverflow.users.models.UserEntity
 
@@ -22,8 +19,17 @@ interface UsersDao {
     @Query("SELECT * from users WHERE id = :id")
     fun getUser(id: Long): LiveData<UserEntity>
 
+    @Query("SELECT * from users WHERE id = :id")
+    suspend fun getUserNoLiveData(id: Long): UserEntity
+
+    @Query("SELECT * from users WHERE id = :id")
+    fun getUserNoLiveDataNoSuspend(id: Long): UserEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllUser(plants: List<UserEntity>)
+
+    @Update
+    suspend fun update(user: UserEntity)
     //**********************
 
 
