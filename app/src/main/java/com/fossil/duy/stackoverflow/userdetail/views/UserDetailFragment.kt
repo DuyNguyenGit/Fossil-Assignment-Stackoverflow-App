@@ -11,8 +11,8 @@ import com.fossil.duy.stackoverflow.R
 import com.fossil.duy.stackoverflow.base.BaseFragment
 import com.fossil.duy.stackoverflow.common.changeTextByCondition
 import com.fossil.duy.stackoverflow.common.getFormattedDate
-import com.fossil.duy.stackoverflow.common.hide
 import com.fossil.duy.stackoverflow.common.loadCircleImage
+import com.fossil.duy.stackoverflow.common.show
 import com.fossil.duy.stackoverflow.databinding.UserDetailFragmentBinding
 import com.fossil.duy.stackoverflow.di.injectViewModel
 import com.fossil.duy.stackoverflow.userdetail.viewmodels.UserDetailViewModel
@@ -29,6 +29,7 @@ class UserDetailFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: UserDetailViewModel
+    private lateinit var binding: UserDetailFragmentBinding
     private val adapter: UserDetailsAdapter by lazy { UserDetailsAdapter() }
     private val userId by lazy { navArgs<UserDetailFragmentArgs>().value.userId }
 
@@ -39,16 +40,13 @@ class UserDetailFragment : BaseFragment() {
         viewModel = injectViewModel(viewModelFactory)
         viewModel.connectivityAvailable = ConnectivityUtil.isConnected(context!!)
         viewModel.userId = userId
-        val binding = UserDetailFragmentBinding.inflate(inflater, container, false)
+        binding = UserDetailFragmentBinding.inflate(inflater, container, false)
         binding.userDetailViewModel = viewModel
 
         context ?: return binding.root
         binding.recyclerView.adapter = adapter
 
-        viewModel.loadUser()
-        handleClickListener(binding)
-        updateUIByObserve(binding, adapter)
-
+        binding.progressBar.show()
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -73,10 +71,22 @@ class UserDetailFragment : BaseFragment() {
             binding.userProfileImage.loadCircleImage(it.profileImageUrl)
         }
         viewModel.userDetails.observe(viewLifecycleOwner) {
-            binding.progressBar.hide()
             adapter.submitList(it)
         }
     }
 
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.loadUser()
+        handleClickListener(binding)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        updateUIByObserve(binding, adapter)
+    }
 
 }

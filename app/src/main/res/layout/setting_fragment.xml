@@ -17,9 +17,9 @@
 
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="237dp"
-            android:layout_height="29dp"
-            android:layout_marginStart="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="48dp"
             android:text="@string/display_switch"
             android:textSize="@dimen/sp_16"
@@ -31,11 +31,11 @@
             android:id="@+id/displaySwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="68dp"
             android:layout_marginTop="48dp"
+            android:layout_marginEnd="16dp"
             android:checked="@{viewModel.isOnlyBookmarkDisplayed}"
             android:switchMinWidth="56dp"
-            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
